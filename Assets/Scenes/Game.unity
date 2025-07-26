@@ -337,7 +337,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 53883923}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1366839366}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: RestartLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &53883923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,7 +1219,7 @@ GameObject:
   - component: {fileID: 592962979}
   - component: {fileID: 592962980}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: GoldManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1237,10 +1249,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 592962978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d496119f6339a0942933e2098d390d0e, type: 3}
+  m_Script: {fileID: 11500000, guid: d90679edbac1d3f46a76c9fae303a1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldText: {fileID: 1375299520}
+  goldTxt: {fileID: 1375299520}
 --- !u!1 &613722260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,7 +1872,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1265970941}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1778680077}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: UndoMove
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1265970941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2022,6 +2046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f394ae8dfde8f409d13ac44bda9efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelTxt: {fileID: 151736613}
   levels:
   - {fileID: 11400000, guid: fa41b79a2c1e271458cd1d32b47b0f69, type: 2}
   - {fileID: 11400000, guid: e6ac30a672a6f544e9ca5129dc437aaf, type: 2}
@@ -2751,8 +2776,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1778680076}
-  - {fileID: 592962979}
   - {fileID: 970859987}
+  - {fileID: 592962979}
   - {fileID: 1366839365}
   - {fileID: 1679555289}
   - {fileID: 1503143001}
@@ -2977,7 +3002,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2067886354}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1503143002}
+        m_TargetAssemblyTypeName: AddRodManager, Assembly-CSharp
+        m_MethodName: TryAddRod
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2067886354
 MonoBehaviour:
   m_ObjectHideFlags: 0

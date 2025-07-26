@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
                 return;
         }
         Debug.Log("Level Completed!");
-        UIManager.Instance.AddGold(50);
+        GoldManager.Instance.AddGold(50);
         LevelManager.Instance.NextLevel();
     }
 }

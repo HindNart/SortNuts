@@ -9,7 +9,7 @@ public class AddRodManager : MonoBehaviour
 
     public void TryAddRod()
     {
-        if (UIManager.Instance.SpendGold(costAddRod))
+        if (GoldManager.Instance.SpendGold(costAddRod))
         {
             AddNewRod();
         }
@@ -22,9 +22,16 @@ public class AddRodManager : MonoBehaviour
     private void AddNewRod()
     {
         int rodCount = GameManager.Instance.CurrentRodCount;
-        Vector3 position = new Vector3(rodCount * rodSpacing - ((rodCount) * rodSpacing / 2f), -3f, 0);
-        GameObject rodObj = Instantiate(rodPrefab, position, Quaternion.identity, rodParent);
+        int rodsPerRow = 3;
+        float rowSpacing = 5f;
 
+        int row = rodCount / rodsPerRow;
+        int col = rodCount % rodsPerRow;
+        float x = col * rodSpacing - ((Mathf.Min(rodCount + 1, rodsPerRow) - 1) * rodSpacing / 2f);
+        float z = -row * rowSpacing;
+        Vector3 position = new Vector3(x, 0f, z);
+
+        GameObject rodObj = Instantiate(rodPrefab, position, Quaternion.identity, rodParent);
         Rod newRod = rodObj.GetComponent<Rod>();
         GameManager.Instance.RegisterNewRod(newRod);
         Debug.Log("New rod added!");

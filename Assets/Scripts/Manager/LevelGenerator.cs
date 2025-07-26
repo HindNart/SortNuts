@@ -34,8 +34,7 @@ public class LevelGenerator : MonoBehaviour
             float x = col * rodSpacing - ((Mathf.Min(rodCount, rodsPerRow) - 1) * rodSpacing / 2f);
             float z = -row * rowSpacing;
             Vector3 position = new Vector3(x, 0f, z);
-            GameObject rodObj = Instantiate(rodPrefab, position, Quaternion.identity);
-            rodObj.transform.SetParent(rodContainer);
+            GameObject rodObj = Instantiate(rodPrefab, position, Quaternion.identity, rodContainer);
             rods[i] = rodObj.GetComponent<Rod>();
         }
         //
@@ -97,10 +96,10 @@ public class LevelGenerator : MonoBehaviour
                 return Color.blue;
             case ColorType.Yellow:
                 return Color.yellow;
-            case ColorType.Orange:
-                return new Color(255, 126, 0, 1);
-            case ColorType.Purple:
-                return new Color(255, 0, 255, 1);
+            case ColorType.White:
+                return Color.white;
+            case ColorType.Black:
+                return Color.black;
             default:
                 return Color.gray;
         }

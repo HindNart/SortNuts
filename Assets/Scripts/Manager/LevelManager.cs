@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
 
+    [SerializeField] private TextMeshProUGUI levelTxt;
     [SerializeField] private LevelData[] levels;
     [SerializeField] private LevelGenerator levelGenerator;
     private int currentLevelIndex;
@@ -35,6 +37,9 @@ public class LevelManager : MonoBehaviour
             return;
         }
 
+        if (levelTxt != null)
+            levelTxt.text = $"LEVEL {index + 1}";
+
         currentLevelIndex = index;
         PlayerPrefs.SetInt("CURRENT_LEVEL", currentLevelIndex);
 
@@ -50,5 +55,10 @@ public class LevelManager : MonoBehaviour
             StartLevel(next);
         else
             Debug.Log("All levels completed!");
+    }
+
+    public void RestartLevel()
+    {
+        StartLevel(currentLevelIndex);
     }
 }

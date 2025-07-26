@@ -1,11 +1,11 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class GoldManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }
-    [SerializeField] private TextMeshProUGUI goldText;
+    public static GoldManager Instance { get; private set; }
+
+    [SerializeField] private TextMeshProUGUI goldTxt;
     private int gold;
     private const string GOLD_KEY = "PLAYER_GOLD";
 
@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
 
     private void Start()
     {
@@ -47,8 +48,8 @@ public class UIManager : MonoBehaviour
 
     private void UpdateGoldUI()
     {
-        if (goldText != null)
-            goldText.text = $"Gold: {gold}";
+        if (goldTxt != null)
+            goldTxt.text = $"Gold: {gold}";
     }
 
     private void SaveGold()
