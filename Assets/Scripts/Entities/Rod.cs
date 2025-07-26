@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Rod : MonoBehaviour
 {
     [SerializeField] private Transform nutContainer;
+    [SerializeField] private ParticleSystem completeRodEff;
     [SerializeField] private int capacity = 4;
     private readonly Stack<Nut> nuts = new Stack<Nut>();
 
@@ -18,32 +20,33 @@ public class Rod : MonoBehaviour
     public bool CanPlaceNut(Nut nut, bool ignoreColor)
     {
         if (nuts.Count == 0) return true;
-        // return nuts.Count < capacity;
         if (ignoreColor)
             return nuts.Count < capacity;
         return nuts.Count < capacity && nuts.Peek().NutColor == nut.NutColor;
     }
 
-    public void PlaceNut(Nut nut, bool ignoreColor = false)
+    public void PlaceNut(Nut nut, bool ignoreColor = false, bool spawnLevel = false)
     {
         if (!CanPlaceNut(nut, ignoreColor)) return;
         nuts.Push(nut);
         nut.SetRod(this);
-        UpdateNutPositions();
-        nut.transform.SetParent(nutContainer);///
-    }
+        nut.transform.SetParent(nutContainer);
 
-    // public void MoveNut(Nut nut)
-    // {
-    //     if (!CanPlaceNut(nut)) return;
-    //     if (nuts.Peek().NutColor == nut.NutColor)
-    //     {
-    //         nuts.Push(nut);
-    //         nut.SetRod(this);
-    //         UpdateNutPositions();
-    //         nut.transform.SetParent(nutContainer);///
-    //     }
-    // }
+        if (IsComplete())
+        {
+            completeRodEff.Play();
+        }
+
+        if (spawnLevel) // Nếu spawn level, cập nhật ngay lập tức
+        {
+            Vector3 pos = GetNutPosition(nuts.Count - 1);
+            nut.transform.position = pos;
+        }
+        else
+        {
+            UpdateNutPositions(); // Di chuyển nhẹ khi không phải animation chính
+        }
+    }
 
     public Nut RemoveNut()
     {
@@ -67,13 +70,25 @@ public class Rod : MonoBehaviour
         return nuts.Count == capacity;
     }
 
+    public Vector3 GetNutPosition(int index)
+    {
+        // Vị trí nut theo index (0 là đáy)
+        return transform.position + Vector3.up * (0.55f * index - 0.9f);
+    }
+
     private void UpdateNutPositions()
     {
-        Nut[] nutArray = nuts.ToArray(); // Nut mới nhất ở index 0
+        Nut[] nutArray = nuts.ToArray();
         for (int i = 0; i < nutArray.Length; i++)
         {
-            Vector3 pos = transform.position + Vector3.up * (0.55f * (nutArray.Length - 1 - i));
-            nutArray[i].transform.position = pos - Vector3.up * 0.9f;
+            int targetIndex = nutArray.Length - 1 - i;
+            Vector3 pos = GetNutPosition(targetIndex);
+            nutArray[i].transform.DOMove(pos, 0.2f);
         }
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.KillAll();
     }
 }

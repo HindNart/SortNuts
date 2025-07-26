@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -62,5 +63,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("Level Completed!");
         GoldManager.Instance.AddGold(50);
         LevelManager.Instance.NextLevel();
+    }
+
+    public void BackMainMenu()
+    {
+        if (Instance != null) Destroy(Instance.gameObject);
+        if (GoldManager.Instance != null) Destroy(GoldManager.Instance.gameObject);
+        if (LevelManager.Instance != null) Destroy(LevelManager.Instance.gameObject);
+        if (AudioManager.Instance != null) Destroy(AudioManager.Instance.gameObject);
+        SceneManager.LoadScene("MainMenu");
     }
 }

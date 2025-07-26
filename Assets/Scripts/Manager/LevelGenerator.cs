@@ -74,7 +74,7 @@ public class LevelGenerator : MonoBehaviour
             bool hideColor = hiddenNutIndexes.Contains(i);
             //
             nut.Initialize(colorType, color, hideColor, targetRod);
-            targetRod.PlaceNut(nut, true);
+            targetRod.PlaceNut(nut, true, true);
 
             Debug.Log($"[LevelGenerator] Placed nut {i} ({colorType}) in rod {System.Array.IndexOf(rods, targetRod)}. Rod now has {targetRod.GetNutCount} nuts.");
         }
