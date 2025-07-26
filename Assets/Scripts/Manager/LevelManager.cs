@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get; private set; }
 
     [SerializeField] private TextMeshProUGUI levelTxt;
+    [SerializeField] private GameObject levelCompletedPanel;
     [SerializeField] private LevelData[] levels;
     [SerializeField] private LevelGenerator levelGenerator;
     private int currentLevelIndex;
@@ -25,6 +27,11 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        if (levelCompletedPanel != null)
+        {
+            levelCompletedPanel.SetActive(false);
+        }
+
         currentLevelIndex = PlayerPrefs.GetInt("CURRENT_LEVEL", 0);
         StartLevel(currentLevelIndex);
     }
@@ -48,8 +55,13 @@ public class LevelManager : MonoBehaviour
         levelGenerator.GenerateLevel(data.rodCount, data.nutColors, data.nutsPerColor, data.hiddenNutRatio);
     }
 
-    public void NextLevel()
+    public IEnumerator NextLevel()
     {
+        yield return new WaitForSeconds(1f);
+        levelCompletedPanel.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        levelCompletedPanel.SetActive(false);
+
         int next = currentLevelIndex + 1;
         if (next < levels.Length)
             StartLevel(next);

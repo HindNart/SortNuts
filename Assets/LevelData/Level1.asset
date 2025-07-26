@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baf106bcc5bcc9649a056a14c75f041c, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  rodCount: 3
-  nutColors: 2
+  rodCount: 2
+  nutColors: 1
   nutsPerColor: 4
   hiddenNutRatio: 0

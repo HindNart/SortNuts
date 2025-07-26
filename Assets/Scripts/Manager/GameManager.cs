@@ -61,8 +61,8 @@ public class GameManager : MonoBehaviour
                 return;
         }
         Debug.Log("Level Completed!");
-        GoldManager.Instance.AddGold(50);
-        LevelManager.Instance.NextLevel();
+        GoldManager.Instance.AddGold(25);
+        StartCoroutine(LevelManager.Instance.NextLevel());
     }
 
     public void BackMainMenu()

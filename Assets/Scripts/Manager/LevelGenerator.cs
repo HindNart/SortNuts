@@ -26,7 +26,7 @@ public class LevelGenerator : MonoBehaviour
         // Tạo rod
         Rod[] rods = new Rod[rodCount];
         int rodsPerRow = 3;
-        float rowSpacing = 5f;
+        float rowSpacing = 3f;
         for (int i = 0; i < rodCount; i++)
         {
             int row = i / rodsPerRow;

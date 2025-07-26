@@ -23,7 +23,7 @@ public class AddRodManager : MonoBehaviour
     {
         int rodCount = GameManager.Instance.CurrentRodCount;
         int rodsPerRow = 3;
-        float rowSpacing = 5f;
+        float rowSpacing = 3f;
 
         int row = rodCount / rodsPerRow;
         int col = rodCount % rodsPerRow;
