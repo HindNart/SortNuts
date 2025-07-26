@@ -3,11 +3,9 @@ public class BasicMoveValidator : IRuleValidator
     public bool IsValidMove(Rod from, Rod to)
     {
         if (from == null || to == null || from == to) return false;
-        Nut topNut = from.RemoveNut();
+        Nut topNut = from.PeekNut();
         if (topNut == null) return false;
 
-        bool valid = to.CanPlaceNut(topNut);
-        from.PlaceNut(topNut); // Restore
-        return valid;
+        return to.CanPlaceNut(topNut, false);
     }
 }

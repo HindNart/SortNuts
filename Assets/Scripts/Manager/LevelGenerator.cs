@@ -31,20 +31,33 @@ public class LevelGenerator : MonoBehaviour
         }
 
         int currentNut = 0;
-        for (int i = 0; i < nutColors * nutsPerColor; i++)
+        int totalNuts = nutColors * nutsPerColor;
+        int totalCapacity = rodCount * rods[0].GetCapacity; // Thêm hàm GetCapacity() trong Rod nếu chưa có
+        Debug.Log($"[LevelGenerator] Total nuts: {totalNuts}, Total rod capacity: {totalCapacity}");
+
+        for (int i = 0; i < totalNuts; i++)
         {
+            int tryCount = 0;
             Rod targetRod;
             do
             {
                 targetRod = rods[Random.Range(0, rodCount)];
+                tryCount++;
+                if (tryCount > 100)
+                {
+                    Debug.LogError($"[LevelGenerator] Could not find empty rod for nut {i} after 100 tries!");
+                    break;
+                }
             } while (targetRod.IsFull());
 
             ColorType colorType = allNuts[currentNut++];
-            Color color = GetColorFromType(colorType);///
+            Color color = GetColorFromType(colorType);
             GameObject nutObj = Instantiate(nutPrefab);
             Nut nut = nutObj.GetComponent<Nut>();
-            nut.Initialize(colorType, color, targetRod);///
-            targetRod.PlaceNut(nut);
+            nut.Initialize(colorType, color, targetRod);
+            targetRod.PlaceNut(nut, true);
+
+            Debug.Log($"[LevelGenerator] Placed nut {i} ({colorType}) in rod {System.Array.IndexOf(rods, targetRod)}. Rod now has {targetRod.GetNutCount} nuts.");
         }
 
         GameManager.Instance.RegisterRods(rods);
