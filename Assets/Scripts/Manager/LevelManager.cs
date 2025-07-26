@@ -64,10 +64,7 @@ public class LevelManager : MonoBehaviour
         levelCompletedPanel.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         AudioManager.Instance.PlaySFX("LevelCompleted");
         yield return new WaitForSeconds(3f);
-        levelCompletedPanel.transform.DOScale(0f, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
-        {
-            levelCompletedPanel.SetActive(false);
-        });
+        levelCompletedPanel.SetActive(false);
 
         int next = currentLevelIndex + 1;
         if (next < levels.Length)

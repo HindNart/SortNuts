@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class InputHandler : MonoBehaviour
 {
@@ -14,26 +15,60 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private float moveHorizontalDuration = 0.4f;
     [SerializeField] private float lowerDuration = 0.25f;
 
+    private float lastClickTime = 0f;
+    private float clickCooldown = 0.15f; // 150ms tránh double click
+
     private void Update()
     {
         if (isMoving) return;
 
+        // --- PC: click chuột trái ---
         if (Input.GetMouseButtonDown(0))
         {
+            if (Time.time - lastClickTime < clickCooldown) return;
+            lastClickTime = Time.time;
+
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                return; // Click trúng UI thì bỏ qua
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            ProcessRaycast(ray);
+        }
+
+        // --- Mobile: chạm màn hình ---
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
             {
-                Rod rod = hit.collider.GetComponent<Rod>();
-                if (rod != null)
-                {
-                    HandleRodClick(rod);
-                }
+                if (Time.time - lastClickTime < clickCooldown) return;
+                lastClickTime = Time.time;
+
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                    return; // Chạm vào UI thì bỏ qua
+
+                Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                ProcessRaycast(ray);
+            }
+        }
+    }
+
+    private void ProcessRaycast(Ray ray)
+    {
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Rod rod = hit.collider.GetComponent<Rod>();
+            if (rod != null)
+            {
+                HandleRodClick(rod);
             }
         }
     }
 
     private void HandleRodClick(Rod rod)
     {
+        if (isMoving) return;
+
         if (selectedRod == null)
         {
             // Chọn rod đầu tiên và nâng nut trên cùng
