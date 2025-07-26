@@ -25,26 +25,6 @@ public class InputHandler : MonoBehaviour
                     }
                 }
             }
-
-            // Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // Collider2D hit = Physics2D.OverlapPoint(worldPos);
-
-            // if (hit != null)
-            // {
-            //     Rod rod = hit.GetComponent<Rod>();
-            //     if (rod != null)
-            //     {
-            //         if (selectedRod == null)
-            //         {
-            //             selectedRod = rod;
-            //         }
-            //         else
-            //         {
-            //             GameManager.Instance.TryMove(selectedRod, rod);
-            //             selectedRod = null;
-            //         }
-            //     }
-            // }
         }
     }
 }

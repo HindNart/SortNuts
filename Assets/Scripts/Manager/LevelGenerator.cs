@@ -10,6 +10,7 @@ public class LevelGenerator : MonoBehaviour
 
     public Rod[] GenerateLevel(int rodCount, int nutColors, int nutsPerColor)
     {
+        // Tạo màu cho nut
         List<ColorType> allNuts = new List<ColorType>();
         for (int c = 0; c < nutColors; c++)
         {
@@ -17,22 +18,32 @@ public class LevelGenerator : MonoBehaviour
                 allNuts.Add((ColorType)c);
         }
         Shuffle(allNuts);
+        //
 
         foreach (var rod in FindObjectsOfType<Rod>())
             Destroy(rod.gameObject);
 
+        // Tạo rod
         Rod[] rods = new Rod[rodCount];
+        int rodsPerRow = 3;
+        float rowSpacing = 5f;
         for (int i = 0; i < rodCount; i++)
         {
-            Vector3 position = new Vector3(i * rodSpacing - ((rodCount - 1) * rodSpacing / 2f), 0f, 0f);
+            int row = i / rodsPerRow;
+            int col = i % rodsPerRow;
+            float x = col * rodSpacing - ((Mathf.Min(rodCount, rodsPerRow) - 1) * rodSpacing / 2f);
+            float z = -row * rowSpacing;
+            Vector3 position = new Vector3(x, 0f, z);
             GameObject rodObj = Instantiate(rodPrefab, position, Quaternion.identity);
-            rodObj.transform.SetParent(rodContainer);///
+            rodObj.transform.SetParent(rodContainer);
             rods[i] = rodObj.GetComponent<Rod>();
         }
+        //
 
+        // Tạo nut
         int currentNut = 0;
         int totalNuts = nutColors * nutsPerColor;
-        int totalCapacity = rodCount * rods[0].GetCapacity; // Thêm hàm GetCapacity() trong Rod nếu chưa có
+        int totalCapacity = rodCount * rods[0].GetCapacity;
         Debug.Log($"[LevelGenerator] Total nuts: {totalNuts}, Total rod capacity: {totalCapacity}");
 
         for (int i = 0; i < totalNuts; i++)
@@ -59,6 +70,7 @@ public class LevelGenerator : MonoBehaviour
 
             Debug.Log($"[LevelGenerator] Placed nut {i} ({colorType}) in rod {System.Array.IndexOf(rods, targetRod)}. Rod now has {targetRod.GetNutCount} nuts.");
         }
+        //
 
         GameManager.Instance.RegisterRods(rods);
         return rods;

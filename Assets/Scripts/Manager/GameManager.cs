@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (Rod rod in rods)
         {
-            if (!rod.IsComplete())
+            if (rod.GetNutCount > 0 && !rod.IsComplete())
                 return;
         }
         Debug.Log("Level Completed!");
