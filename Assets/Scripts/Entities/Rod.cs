@@ -34,6 +34,7 @@ public class Rod : MonoBehaviour
 
         if (IsComplete())
         {
+            AudioManager.Instance.PlaySFX("RodCompleted");
             completeRodEff.Play();
         }
 

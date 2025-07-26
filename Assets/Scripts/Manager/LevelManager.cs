@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -59,8 +60,14 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         levelCompletedPanel.SetActive(true);
+        levelCompletedPanel.transform.localScale = Vector3.zero;
+        levelCompletedPanel.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
+        AudioManager.Instance.PlaySFX("LevelCompleted");
         yield return new WaitForSeconds(3f);
-        levelCompletedPanel.SetActive(false);
+        levelCompletedPanel.transform.DOScale(0f, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
+        {
+            levelCompletedPanel.SetActive(false);
+        });
 
         int next = currentLevelIndex + 1;
         if (next < levels.Length)
@@ -71,6 +78,13 @@ public class LevelManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
+
         StartLevel(currentLevelIndex);
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.KillAll();
     }
 }

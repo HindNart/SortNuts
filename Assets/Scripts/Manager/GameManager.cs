@@ -50,7 +50,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UndoMove() => invoker.Undo();
+    public void UndoMove()
+    {
+        AudioManager.Instance.PlaySFX("ButtonClick");
+        invoker.Undo();
+    }
+
     public void RedoMove() => invoker.Redo();
 
     private void CheckWinCondition()
@@ -67,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     public void BackMainMenu()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
         if (Instance != null) Destroy(Instance.gameObject);
         if (GoldManager.Instance != null) Destroy(GoldManager.Instance.gameObject);
         if (LevelManager.Instance != null) Destroy(LevelManager.Instance.gameObject);

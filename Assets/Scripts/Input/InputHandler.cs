@@ -44,6 +44,9 @@ public class InputHandler : MonoBehaviour
             selectedNut = topNut;
             nutOriginalPos = selectedNut.transform.position;
 
+            AudioManager.Instance.PlaySFX("LiftNut");
+
+
             isMoving = true;
             selectedNut.transform.DOMove(nutOriginalPos + Vector3.up * liftHeight, liftDuration)
                 .OnComplete(() => isMoving = false);
@@ -65,6 +68,8 @@ public class InputHandler : MonoBehaviour
 
     private IEnumerator LowerNutBack()
     {
+        AudioManager.Instance.PlaySFX("DownNut");
+
         isMoving = true;
         yield return selectedNut.transform.DOMove(nutOriginalPos, lowerDuration).WaitForCompletion();
         ClearSelection();
@@ -78,6 +83,8 @@ public class InputHandler : MonoBehaviour
             ClearSelection();
             yield break;
         }
+
+        AudioManager.Instance.PlaySFX("DownNut");
 
         isMoving = true;
 

@@ -9,6 +9,8 @@ public class AddRodManager : MonoBehaviour
 
     public void TryAddRod()
     {
+        AudioManager.Instance.PlaySFX("ButtonClick");
+
         if (GoldManager.Instance.SpendGold(costAddRod))
         {
             AddNewRod();

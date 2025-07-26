@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private float bgmVolume = 0.5f;
     [SerializeField] private float sfxVolume = 0.8f;
     [SerializeField] private int maxSfxSources = 10;
+    [SerializeField] Button btnVolume;
+    [SerializeField] Sprite muteVolume;
+    [SerializeField] Sprite unMuteVolume;
 
     private Dictionary<string, AudioClipEntry> sfxDictionary;
     private List<AudioSource> sfxSources;
@@ -74,11 +78,6 @@ public class AudioManager : MonoBehaviour
         bgmSource.Play();
     }
 
-    public void StopBGM()
-    {
-        bgmSource.Stop();
-    }
-
     public void PlaySFX(string key)
     {
         if (sfxDictionary.ContainsKey(key))
@@ -119,6 +118,27 @@ public class AudioManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         sfxVolume = Mathf.Clamp01(volume);
+    }
+
+    public void ToggleSFX()
+    {
+        PlaySFX("ButtonClick");
+
+        if (sfxVolume > 0)
+        {
+            sfxVolume = 0;
+            btnVolume.image.sprite = muteVolume;
+        }
+        else
+        {
+            sfxVolume = 1;
+            btnVolume.image.sprite = unMuteVolume;
+        }
+
+        foreach (var source in sfxSources)
+        {
+            source.volume = sfxVolume;
+        }
     }
 
     private void OnDestroy()
