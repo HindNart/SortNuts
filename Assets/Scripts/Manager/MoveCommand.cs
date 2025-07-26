@@ -16,6 +16,14 @@ public class MoveCommand : ICommand
         if (movedNut != null)
         {
             toRod.PlaceNut(movedNut);
+
+            // Sau khi remove, nut mới trên cùng của fromRod (nếu có) cần hiện màu nếu đang bị ẩn
+            Nut newTop = fromRod.PeekNut();
+            if (newTop != null && newTop.IsColorHidden)
+            {
+                // Hiện lại màu gốc
+                newTop.SetColorHidden(false);
+            }
         }
     }
 

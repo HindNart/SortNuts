@@ -8,7 +8,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float rodSpacing = 2.0f;
     [SerializeField] private Transform rodContainer;
 
-    public Rod[] GenerateLevel(int rodCount, int nutColors, int nutsPerColor)
+    public Rod[] GenerateLevel(int rodCount, int nutColors, int nutsPerColor, float hiddenNutRatio = 0.2f)
     {
         // Tạo màu cho nut
         List<ColorType> allNuts = new List<ColorType>();
@@ -45,6 +45,12 @@ public class LevelGenerator : MonoBehaviour
         int totalCapacity = rodCount * rods[0].GetCapacity;
         Debug.Log($"[LevelGenerator] Total nuts: {totalNuts}, Total rod capacity: {totalCapacity}");
 
+        // Tạo danh sách index nut sẽ bị ẩn màu
+        int hiddenNutCount = Mathf.RoundToInt(totalNuts * hiddenNutRatio);
+        HashSet<int> hiddenNutIndexes = new HashSet<int>();
+        while (hiddenNutIndexes.Count < hiddenNutCount)
+            hiddenNutIndexes.Add(Random.Range(0, totalNuts));
+
         for (int i = 0; i < totalNuts; i++)
         {
             int tryCount = 0;
@@ -64,12 +70,25 @@ public class LevelGenerator : MonoBehaviour
             Color color = GetColorFromType(colorType);
             GameObject nutObj = Instantiate(nutPrefab);
             Nut nut = nutObj.GetComponent<Nut>();
-            nut.Initialize(colorType, color, targetRod);
+            // Ẩn màu nếu index nằm trong danh sách
+            bool hideColor = hiddenNutIndexes.Contains(i);
+            //
+            nut.Initialize(colorType, color, hideColor, targetRod);
             targetRod.PlaceNut(nut, true);
 
             Debug.Log($"[LevelGenerator] Placed nut {i} ({colorType}) in rod {System.Array.IndexOf(rods, targetRod)}. Rod now has {targetRod.GetNutCount} nuts.");
         }
         //
+
+        // Đảm bảo nut trên cùng không bị ẩn màu
+        foreach (var rod in rods)
+        {
+            Nut topNut = rod.PeekNut();
+            if (topNut != null && topNut.IsColorHidden)
+            {
+                topNut.SetColorHidden(false);
+            }
+        }
 
         GameManager.Instance.RegisterRods(rods);
         return rods;
@@ -84,7 +103,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private Color GetColorFromType(ColorType colorType)
+    public static Color GetColorFromType(ColorType colorType)
     {
         switch (colorType)
         {

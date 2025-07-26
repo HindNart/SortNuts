@@ -15,3 +15,4 @@ MonoBehaviour:
   rodCount: 6
   nutColors: 4
   nutsPerColor: 4
+  hiddenNutRatio: 0

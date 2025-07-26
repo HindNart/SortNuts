@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
 
         var data = levels[currentLevelIndex];
         Debug.Log($"Level {CurrentLevel}: {data.rodCount} rods, {data.nutColors} colors");
-        levelGenerator.GenerateLevel(data.rodCount, data.nutColors, data.nutsPerColor);
+        levelGenerator.GenerateLevel(data.rodCount, data.nutColors, data.nutsPerColor, data.hiddenNutRatio);
     }
 
     public void NextLevel()

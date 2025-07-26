@@ -150,3 +150,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f48582bcdee0094bbf20e0cef1b6461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nutMat: {fileID: 2100000, guid: be7a49e9ba89c4b4faaee44fc8277aae, type: 2}
+  hideColorNutMat: {fileID: 2100000, guid: 6f39acfd7b43f8242a567a76c00e0a60, type: 2}
