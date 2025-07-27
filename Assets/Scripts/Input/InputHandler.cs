@@ -16,7 +16,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private float lowerDuration = 0.25f;
 
     private float lastClickTime = 0f;
-    private float clickCooldown = 0.15f; // 150ms tránh double click
+    private float clickCooldown = 0.15f;
 
     private void Update()
     {
@@ -73,7 +73,7 @@ public class InputHandler : MonoBehaviour
         {
             // Chọn rod đầu tiên và nâng nut trên cùng
             Nut topNut = rod.PeekNut();
-            if (topNut == null) return;
+            if (topNut == null || rod.IsComplete()) return;
 
             selectedRod = rod;
             selectedNut = topNut;
