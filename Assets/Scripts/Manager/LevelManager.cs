@@ -77,7 +77,11 @@ public class LevelManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySFX("ButtonClick");
 
-        StartLevel(currentLevelIndex);
+        if (GoldManager.Instance.SpendGold(10))
+        {
+            StartLevel(currentLevelIndex);
+        }
+        else Debug.Log("Not enough gold!");
     }
 
     private void OnDestroy()
