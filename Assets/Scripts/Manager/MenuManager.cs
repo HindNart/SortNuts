@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private Button playBtn;
+    [SerializeField] private Button continueBtn;
     [SerializeField] private Button quitBtn;
 
     void Start()
@@ -15,6 +16,18 @@ public class MenuManager : MonoBehaviour
             playBtn.onClick.AddListener(OnPlayBtnClick);
         }
 
+        if (continueBtn != null)
+        {
+            if (!PlayerPrefs.HasKey("CURRENT_LEVEL"))
+            {
+                continueBtn.interactable = false;
+            }
+            else continueBtn.interactable = true;
+
+            continueBtn.onClick.RemoveAllListeners();
+            continueBtn.onClick.AddListener(OnContinueBtnClick);
+        }
+
         if (quitBtn != null)
         {
             quitBtn.onClick.RemoveAllListeners();
@@ -23,6 +36,12 @@ public class MenuManager : MonoBehaviour
     }
 
     private void OnPlayBtnClick()
+    {
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene("Game");
+    }
+
+    private void OnContinueBtnClick()
     {
         SceneManager.LoadScene("Game");
     }
@@ -41,6 +60,10 @@ public class MenuManager : MonoBehaviour
         if (playBtn != null)
         {
             playBtn.onClick.RemoveListener(OnPlayBtnClick);
+        }
+        if (continueBtn != null)
+        {
+            continueBtn.onClick.RemoveListener(OnContinueBtnClick);
         }
         if (quitBtn != null)
         {

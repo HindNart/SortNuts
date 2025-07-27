@@ -53,7 +53,12 @@ public class GameManager : MonoBehaviour
     public void UndoMove()
     {
         AudioManager.Instance.PlaySFX("ButtonClick");
-        invoker.Undo();
+
+        if (GoldManager.Instance.SpendGold(5))
+        {
+            invoker.Undo();
+        }
+        else Debug.Log("Not enough gold!");
     }
 
     public void RedoMove() => invoker.Redo();

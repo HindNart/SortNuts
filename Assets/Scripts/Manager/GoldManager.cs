@@ -49,7 +49,7 @@ public class GoldManager : MonoBehaviour
     private void UpdateGoldUI()
     {
         if (goldTxt != null)
-            goldTxt.text = $"Gold: {gold}";
+            goldTxt.text = $"{gold}";
     }
 
     private void SaveGold()

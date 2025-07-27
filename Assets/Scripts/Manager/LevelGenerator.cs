@@ -33,7 +33,7 @@ public class LevelGenerator : MonoBehaviour
             int col = i % rodsPerRow;
             float x = col * rodSpacing - ((Mathf.Min(rodCount, rodsPerRow) - 1) * rodSpacing / 2f);
             float z = -row * rowSpacing;
-            Vector3 position = new Vector3(x, 0f, z);
+            Vector3 position = new Vector3(x, rodContainer.transform.localPosition.y, z);
             GameObject rodObj = Instantiate(rodPrefab, position, Quaternion.identity, rodContainer);
             rods[i] = rodObj.GetComponent<Rod>();
         }
