@@ -31,7 +31,7 @@ public class AddRodManager : MonoBehaviour
         int col = rodCount % rodsPerRow;
         float x = col * rodSpacing - ((Mathf.Min(rodCount + 1, rodsPerRow) - 1) * rodSpacing / 2f);
         float z = -row * rowSpacing;
-        Vector3 position = new Vector3(x, 0f, z);
+        Vector3 position = new Vector3(x, rodParent.transform.localPosition.y, z);
 
         GameObject rodObj = Instantiate(rodPrefab, position, Quaternion.identity, rodParent);
         Rod newRod = rodObj.GetComponent<Rod>();
