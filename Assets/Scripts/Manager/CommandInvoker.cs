@@ -20,6 +20,7 @@ public class CommandInvoker
             command.Undo();
             redoStack.Push(command);
         }
+        else return;
     }
 
     public void Redo()
@@ -30,6 +31,7 @@ public class CommandInvoker
             command.Execute();
             undoStack.Push(command);
         }
+        else return;
     }
 
     public void ClearHistory()
